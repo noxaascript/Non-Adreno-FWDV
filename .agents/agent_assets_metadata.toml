@@ -36,3 +36,15 @@ id = "02PJl_WchbYn1rYXQL6fi"
 uri = "file://attached_assets/FexDXVK-separate-packages.sha256"
 type = "unspecified"
 title = "Optimized package checksums"
+
+[[outputs]]
+id = "8kBLEZWmcln6lYlYBrJ3d"
+uri = "file://attached_assets/FexDXVK-F1-2014-Cool.winlator"
+type = "unspecified"
+title = "FexDXVK F1 2014 Cool High-Quality Wrapper"
+
+[[outputs]]
+id = "HLwUWD9CSFowGoc_HfJLu"
+uri = "file://attached_assets/FexDXVK-F1-2014-Cool.winlator.sha256"
+type = "unspecified"
+title = "F1 2014 package checksum"
