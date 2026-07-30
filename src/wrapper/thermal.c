@@ -113,6 +113,7 @@ static void *thermal_thread(void *arg) {
 void thermal_start(int thresholdCelsius) {
     s_threshold = thresholdCelsius;
     s_stop = 0;
+    s_perfScale = 100;
     pthread_create(&s_thermalThread, NULL, thermal_thread, NULL);
 }
 

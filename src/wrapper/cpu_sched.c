@@ -101,9 +101,10 @@ static void *worker_entry(void *arg) {
     if (s_bigCoreMask)
         set_affinity_mask(0, s_bigCoreMask);
 
-    /* Worker loop: in a real impl, workers dequeue FEX/DXVK compile jobs */
+    /* Worker loop: keep idle workers asleep instead of burning a 1 ms poll.
+     * FEX/DXVK can opt in to this pool with FEXDXVK_WORKERS=1. */
     while (!s_workerStop) {
-        usleep(1000);  /* yield; real impl would block on a semaphore */
+        usleep(20000);
     }
     w->active = 0;
     return NULL;
@@ -153,7 +154,11 @@ void cpu_sched_init(void) {
     build_core_topology();
     optimize_render_thread();
     reduce_cpu_overhead();
-    start_worker_pool();
+    if (getenv("FEXDXVK_WORKERS") &&
+        strcmp(getenv("FEXDXVK_WORKERS"), "1") == 0)
+        start_worker_pool();
+    else
+        fprintf(stderr, "[fexdxvk-cpu] worker pool disabled (low-overhead mode)\n");
 }
 
 void cpu_sched_shutdown(void) {

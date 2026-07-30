@@ -12,7 +12,7 @@
     "pipelineCachePersistent":true,
     "shaderCachePersistent":  true,
     "commandBufferOptimizer": true,
-    "framePacing":            true,
+    "framePacing":            false,
     "renderQueueBalancer":    true,
     "asyncCommandSubmission": true
   },
@@ -29,7 +29,7 @@
     "cpuScheduler":            true,
     "threadAffinity":          true,
     "renderThreadOptimization":true,
-    "workerThreadPool":        true,
+    "workerThreadPool":        false,
     "cpuOverheadReduction":    true
   },
   "memory": {
@@ -46,15 +46,15 @@
     "thermalThresholdCelsius": 75
   },
   "monitoring": {
-    "fpsCounter":        true,
-    "frameTimeMonitor":  true,
-    "gpuLoad":           true,
-    "cpuLoad":           true,
-    "temperatureMonitor":true,
+    "fpsCounter":        false,
+    "frameTimeMonitor":  false,
+    "gpuLoad":           false,
+    "cpuLoad":           false,
+    "temperatureMonitor":false,
     "debugLogger":       false
   },
   "profiles": {
-    "balanced":    {"gpuPowerProfile":"balanced",    "thermalThresholdCelsius":75,  "asyncCommandSubmission":true,  "workerThreadPool":true, "cacheCleaner":true},
+    "balanced":    {"gpuPowerProfile":"balanced",    "thermalThresholdCelsius":75,  "asyncCommandSubmission":true,  "workerThreadPool":false, "cacheCleaner":true},
     "performance": {"gpuPowerProfile":"performance", "thermalThresholdCelsius":85,  "asyncCommandSubmission":true,  "workerThreadPool":true, "cacheCleaner":false},
     "cool":        {"gpuPowerProfile":"cool",        "thermalThresholdCelsius":65,  "asyncCommandSubmission":false, "workerThreadPool":false,"cacheCleaner":true}
   },

@@ -26,4 +26,10 @@ export FEX_ROOTFS=""
 # Runtime stats socket
 export FEXDXVK_STATS_PATH="/tmp/fexdxvk_stats"
 
+# Low-overhead defaults. Enable diagnostics explicitly when profiling:
+#   FEXDXVK_MONITOR=1 FEXDXVK_WORKERS=1 ./init.sh ...
+export FEXDXVK_MONITOR="${FEXDXVK_MONITOR:-0}"
+export FEXDXVK_WORKERS="${FEXDXVK_WORKERS:-0}"
+export FEXDXVK_FRAME_PACING="${FEXDXVK_FRAME_PACING:-0}"
+
 exec "$@"

@@ -7,6 +7,8 @@
 #include "vk_layer_fexdxvk.h"
 #include <time.h>
 #include <errno.h>
+#include <stdlib.h>
+#include <string.h>
 
 static inline uint64_t now_ns(void) {
     struct timespec ts;
@@ -32,6 +34,9 @@ static void precise_sleep_until(uint64_t deadlineNs) {
 
 /* Called from vkQueuePresentKHR intercept */
 void frame_pacing_present(FexDevice *dev) {
+    const char *enabled = getenv("FEXDXVK_FRAME_PACING");
+    if (!enabled || strcmp(enabled, "1") != 0)
+        return;
     uint64_t now = now_ns();
 
     if (dev->lastPresentNs != 0) {

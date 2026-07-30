@@ -143,13 +143,20 @@ static void *monitor_thread(void *arg) {
 
 void monitor_start(void) {
     s_stop = 0;
-    /* Enable DXVK HUD for FPS data */
+    /* Monitoring is opt-in: HUD/file polling can add frame-time jitter. */
+    const char *enabled = getenv("FEXDXVK_MONITOR");
+    if (!enabled || strcmp(enabled, "1") != 0) {
+        fprintf(stderr, "[fexdxvk-mon] monitor disabled (low-overhead mode)\n");
+        return;
+    }
     setenv("DXVK_HUD", "fps,frametime", 0);
     pthread_create(&s_monThread, NULL, monitor_thread, NULL);
     fprintf(stderr, "[fexdxvk-mon] monitor started\n");
 }
 
 void monitor_stop(void) {
+    if (!s_monThread) return;
     s_stop = 1;
     pthread_join(s_monThread, NULL);
+    s_monThread = 0;
 }

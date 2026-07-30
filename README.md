@@ -254,6 +254,35 @@ Edit `config/wrapper.json`:
 | `performance` | 85°C | Higher sustained performance |
 | `cool` | 65°C | Lower temperature and power |
 
+### Low-overhead mode
+
+The default configuration is now tuned to reduce avoidable frame-time jitter:
+
+- Worker threads are disabled unless explicitly requested.
+- DXVK HUD/file polling is disabled unless diagnostics are enabled.
+- The custom frame-pacing sleep is disabled by default so it does not
+  double-throttle the Android compositor.
+- DXVK uses two shader compiler threads, a persistent state cache, and one
+  frame of maximum latency.
+
+Enable diagnostics only while profiling:
+
+```bash
+FEXDXVK_MONITOR=1 FEXDXVK_WORKERS=1 ./init.sh <wine-or-fex-command>
+```
+
+Enable the custom pacing layer only if the device exhibits visible cadence
+judder with the compositor's normal pacing:
+
+```bash
+FEXDXVK_FRAME_PACING=1 ./init.sh <wine-or-fex-command>
+```
+
+These changes target CPU wakeups, duplicate present sleeps, and shader
+compilation stalls. A specific 34% stutter reduction must be measured on the
+target phone and game; this project does not claim a guaranteed percentage
+without that device benchmark.
+
 ### DXVK settings
 
 `config/dxvk.conf` contains conservative mobile-GPU defaults:
