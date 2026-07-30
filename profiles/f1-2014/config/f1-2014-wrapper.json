@@ -1,0 +1,48 @@
+{
+  "name": "FexDXVK-F1-2014-Cool",
+  "version": "1.0.0-f1-2014",
+  "game": "F1 2014",
+  "fexCore": "2607-arm64-build-required",
+  "dxvk": "3.0.2",
+  "vkd3dProton": "3.0.1",
+  "profile": "balanced-cool",
+  "targetGPUs": ["Mali-G57", "Mali-G68", "Mali-G610", "Mali-G615", "Mali-G720", "PowerVR Series"],
+  "graphics": {
+    "vulkanQueueOptimizer": true,
+    "pipelineCachePersistent": true,
+    "shaderCachePersistent": true,
+    "commandBufferOptimizer": true,
+    "framePacing": false,
+    "renderQueueBalancer": true,
+    "asyncCommandSubmission": true
+  },
+  "cpu": {
+    "threadAffinity": true,
+    "renderThreadOptimization": true,
+    "workerThreadPool": false,
+    "cpuOverheadReduction": true
+  },
+  "thermal": {
+    "thermalMonitor": true,
+    "adaptiveThermalControl": true,
+    "antiThermalSpike": true,
+    "performanceScaling": true,
+    "thermalThresholdCelsius": 70
+  },
+  "monitoring": {
+    "fpsCounter": false,
+    "frameTimeMonitor": false,
+    "gpuLoad": false,
+    "cpuLoad": false,
+    "temperatureMonitor": false,
+    "debugLogger": false
+  },
+  "binaries": {
+    "dxvkX32": ["d3d8.dll", "d3d9.dll", "d3d10core.dll", "d3d11.dll", "dxgi.dll"],
+    "dxvkX64": ["d3d8.dll", "d3d9.dll", "d3d10core.dll", "d3d11.dll", "dxgi.dll"],
+    "vkd3dX32": ["d3d12.dll", "d3d12core.dll"],
+    "vkd3dX64": ["d3d12.dll", "d3d12core.dll"],
+    "wrapper": ["libfexdxvk_wrapper.so"],
+    "vulkanLayer": ["libVkLayer_fexdxvk.so"]
+  }
+}
