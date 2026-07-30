@@ -1,0 +1,3 @@
+# FEX thunk libraries (ARM64 native replacements for emulated x86 libs):
+# libGL_thunk.so  libvulkan_thunk.so  libSDL2_thunk.so
+# Built alongside FEX-Emu with -DBUILD_THUNKS=ON

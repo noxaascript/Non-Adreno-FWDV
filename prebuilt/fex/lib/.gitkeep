@@ -1,0 +1,3 @@
+# FEX-Emu shared libraries (ARM64):
+# libFEX.so  libFEXCore.so
+# Source: https://github.com/FEX-Emu/FEX (build from FEXCore-2607-custom tag)
