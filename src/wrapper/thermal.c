@@ -15,6 +15,11 @@ static volatile int s_stop = 0;
 static int        s_threshold = 75;
 static int        s_perfScale = 100;  /* 0-100 % */
 
+static void wait_interruptible_ms(int milliseconds) {
+    for (int elapsed = 0; elapsed < milliseconds && !s_stop; elapsed += 100)
+        usleep(100000);
+}
+
 /* extern from fexdxvk_wrapper.c */
 extern void fexdxvk_update_stats(const struct FexStats *s);
 
@@ -71,6 +76,7 @@ static void apply_perf_scale(int scale) {
 }
 
 static void *thermal_thread(void *arg) {
+    (void)arg;
     char sensorPath[256];
     find_temp_sensor(sensorPath, sizeof(sensorPath));
     fprintf(stderr, "[fexdxvk-thermal] sensor: %s | threshold: %d°C\n",
@@ -82,14 +88,14 @@ static void *thermal_thread(void *arg) {
 
     while (!s_stop) {
         int temp = read_temp_celsius(sensorPath);
-        if (temp < 0) { sleep(5); continue; }
+        if (temp < 0) { wait_interruptible_ms(5000); continue; }
 
         /* Anti-spike: temp jumped ≥ 8°C in one poll interval */
         if ((temp - prevTemp) >= 8 && prevTemp > 0) {
             fprintf(stderr, "[fexdxvk-thermal] spike +%d°C detected\n",
                     temp - prevTemp);
             apply_perf_scale(80);
-            sleep(10);
+            wait_interruptible_ms(10000);
         }
 
         /* Stepped performance scaling */
@@ -99,7 +105,7 @@ static void *thermal_thread(void *arg) {
         else                            apply_perf_scale(100);
 
         prevTemp = temp;
-        sleep(5);
+        wait_interruptible_ms(5000);
     }
     return NULL;
 }

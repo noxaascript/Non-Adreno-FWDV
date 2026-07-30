@@ -20,6 +20,11 @@ extern int  thermal_get_scale(void);
 static pthread_t s_monThread;
 static volatile int s_stop = 0;
 
+static void wait_interruptible_ms(int milliseconds) {
+    for (int elapsed = 0; elapsed < milliseconds && !s_stop; elapsed += 100)
+        usleep(100000);
+}
+
 /* ---- CPU load (two /proc/stat snapshots) ---- */
 typedef struct { long idle, total; } CpuSnap;
 
@@ -115,7 +120,7 @@ static void *monitor_thread(void *arg) {
     while (!s_stop) {
         /* CPU: two snapshots 1 s apart */
         CpuSnap snap1 = read_cpu_snap();
-        sleep(1);
+        wait_interruptible_ms(1000);
         CpuSnap snap2 = read_cpu_snap();
 
         FexStats st;
@@ -131,7 +136,7 @@ static void *monitor_thread(void *arg) {
         fexdxvk_update_stats(&st);
         write_stats_json(&st);
 
-        sleep(1);   /* total ~2 s between polls */
+        wait_interruptible_ms(1000);   /* total ~2 s between polls */
     }
     return NULL;
 }

@@ -92,6 +92,7 @@ typedef struct {
 #define MAX_WORKERS 16
 static WorkerThread s_workers[MAX_WORKERS];
 static volatile int s_workerStop = 0;
+static int s_workersStarted = 0;
 
 static void *worker_entry(void *arg) {
     WorkerThread *w = (WorkerThread *)arg;
@@ -116,6 +117,7 @@ static void start_worker_pool(void) {
     for (int i = 0; i < s_workerThreads; i++) {
         pthread_create(&s_workers[i].thread, NULL, worker_entry, &s_workers[i]);
     }
+    s_workersStarted = 1;
     fprintf(stderr, "[fexdxvk-cpu] worker pool: %d threads\n", s_workerThreads);
 }
 
@@ -152,4 +154,13 @@ void cpu_sched_init(void) {
     optimize_render_thread();
     reduce_cpu_overhead();
     start_worker_pool();
+}
+
+void cpu_sched_shutdown(void) {
+    if (!s_workersStarted) return;
+    s_workerStop = 1;
+    for (int i = 0; i < s_workerThreads; i++)
+        pthread_join(s_workers[i].thread, NULL);
+    s_workersStarted = 0;
+    s_workerThreads = 0;
 }

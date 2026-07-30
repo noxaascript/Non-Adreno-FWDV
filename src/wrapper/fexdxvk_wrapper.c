@@ -73,13 +73,6 @@ static int parse_json_int(const char *json, const char *key, int def) {
     return buf[0] ? atoi(buf) : def;
 }
 
-static bool parse_json_bool(const char *json, const char *key, bool def) {
-    char buf[16];
-    parse_json_str(json, key, buf, sizeof(buf));
-    if (!buf[0]) return def;
-    return (buf[0] == 't');
-}
-
 static char *read_file(const char *path) {
     FILE *f = fopen(path, "rb");
     if (!f) return NULL;
@@ -118,6 +111,8 @@ int fexdxvk_init(const char *wrapperJsonPath) {
 
     /* GPU detection */
     gpu_detect_init();
+    g_wrapper.vendor = gpu_detect_vendor();
+    g_wrapper.maliModel = gpu_detect_mali_model();
 
     /* Apply power profile */
     if (strcmp(profileStr, "performance") == 0) {
@@ -155,6 +150,7 @@ void fexdxvk_shutdown(void) {
     if (!g_wrapper.initialized) return;
     monitor_stop();
     thermal_stop();
+    cpu_sched_shutdown();
     g_wrapper.initialized = false;
     fprintf(stderr, "[fexdxvk] shutdown complete\n");
 }

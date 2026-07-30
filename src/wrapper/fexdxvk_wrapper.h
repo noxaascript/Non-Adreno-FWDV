@@ -85,6 +85,11 @@ int fexdxvk_set_profile(const char *profile);
 GpuVendor fexdxvk_get_gpu_vendor(void);
 MaliModel fexdxvk_get_mali_model(void);
 
+/* Internal lifecycle hooks used by the wrapper implementation. */
+GpuVendor gpu_detect_vendor(void);
+MaliModel gpu_detect_mali_model(void);
+void cpu_sched_shutdown(void);
+
 #ifdef __cplusplus
 }
 #endif

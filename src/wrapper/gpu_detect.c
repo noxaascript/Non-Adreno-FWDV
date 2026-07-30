@@ -13,10 +13,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-/* Exposed via wrapper globals (see fexdxvk_wrapper.c) */
-extern GpuVendor g_gpuVendor;
-extern MaliModel g_maliModel;
-
 /* ---- sysfs helpers ---- */
 static int sysfs_exists(const char *path) {
     struct stat st;
@@ -172,6 +168,14 @@ int gpu_detect_init(void) {
     fprintf(stderr, "[fexdxvk] GPU detected: %s (model=%d)\n",
             names[s_vendor], (int)s_model);
     return 0;
+}
+
+GpuVendor gpu_detect_vendor(void) {
+    return s_vendor;
+}
+
+MaliModel gpu_detect_mali_model(void) {
+    return s_model;
 }
 
 /* ---- Power profile application ---- */
