@@ -1,0 +1,82 @@
+{
+  "name": "Wrapper-NonAdreno",
+  "version": "1.0.0",
+  "fexCore": "2607-custom",
+  "dxvk": "1.7.5-nonadreno-fix",
+  "vkd3dProton": "2.13",
+  "description": "Optimized FEX+DXVK+VKD3D wrapper for non-Adreno GPUs (Mali / PowerVR) on Winlator GameHub",
+  "targetGPUs": ["Mali-G57","Mali-G68","Mali-G610","Mali-G615","Mali-G720","PowerVR Series"],
+  "profile": "balanced",
+  "graphics": {
+    "vulkanQueueOptimizer":   true,
+    "pipelineCachePersistent":true,
+    "shaderCachePersistent":  true,
+    "commandBufferOptimizer": true,
+    "framePacing":            true,
+    "renderQueueBalancer":    true,
+    "asyncCommandSubmission": true
+  },
+  "gpu": {
+    "maliGPUDetection":   true,
+    "powerVRDetection":   true,
+    "genericGPUFallback": true,
+    "gpuWorkloadScheduler":true,
+    "gpuLoadMonitor":     true,
+    "gpuPowerProfile":    "balanced",
+    "adaptiveGPUWorkload":true
+  },
+  "cpu": {
+    "cpuScheduler":            true,
+    "threadAffinity":          true,
+    "renderThreadOptimization":true,
+    "workerThreadPool":        true,
+    "cpuOverheadReduction":    true
+  },
+  "memory": {
+    "memoryPool":             true,
+    "commandBufferReuse":     true,
+    "cacheCleaner":           true,
+    "resourceLifetimeManager":true
+  },
+  "thermal": {
+    "thermalMonitor":          true,
+    "adaptiveThermalControl":  true,
+    "antiThermalSpike":        true,
+    "performanceScaling":      true,
+    "thermalThresholdCelsius": 75
+  },
+  "monitoring": {
+    "fpsCounter":        true,
+    "frameTimeMonitor":  true,
+    "gpuLoad":           true,
+    "cpuLoad":           true,
+    "temperatureMonitor":true,
+    "debugLogger":       false
+  },
+  "profiles": {
+    "balanced":    {"gpuPowerProfile":"balanced",    "thermalThresholdCelsius":75,  "asyncCommandSubmission":true,  "workerThreadPool":true, "cacheCleaner":true},
+    "performance": {"gpuPowerProfile":"performance", "thermalThresholdCelsius":85,  "asyncCommandSubmission":true,  "workerThreadPool":true, "cacheCleaner":false},
+    "cool":        {"gpuPowerProfile":"cool",        "thermalThresholdCelsius":65,  "asyncCommandSubmission":false, "workerThreadPool":false,"cacheCleaner":true}
+  },
+  "binaries": {
+    "dxvk": {
+      "x32": ["d3d8.dll","d3d9.dll","d3d10core.dll","d3d11.dll","dxgi.dll"],
+      "x64": ["d3d8.dll","d3d9.dll","d3d10core.dll","d3d11.dll","dxgi.dll"]
+    },
+    "vkd3d": {
+      "x32": ["d3d12.dll"],
+      "x64": ["d3d12.dll"]
+    },
+    "fex": {
+      "executables": ["FEXInterpreter","FEXBash"],
+      "libs": ["libFEX.so","libFEXCore.so"]
+    },
+    "wrapper": {
+      "libs": ["libfexdxvk_wrapper.so"]
+    },
+    "vulkanLayer": {
+      "libs": ["libVkLayer_fexdxvk.so"],
+      "manifests": ["VkLayer_fexdxvk.json"]
+    }
+  }
+}

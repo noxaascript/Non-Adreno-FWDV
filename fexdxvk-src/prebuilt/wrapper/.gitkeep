@@ -1,0 +1,4 @@
+# Place compiled libfexdxvk_wrapper.so here after running:
+#   cmake --build build/android   (Android arm64-v8a)
+# or
+#   cmake --build build/linux     (Linux aarch64 cross-compile)
