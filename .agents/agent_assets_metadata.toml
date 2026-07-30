@@ -5,34 +5,34 @@ generated = []
 id = "Uj3aFe9h6PqEONHqcTuPO"
 uri = "file://attached_assets/FexDXVK-NonAdreno.winlator"
 type = "unspecified"
-title = "FexDXVK-NonAdreno.winlator — updated 23 MB package"
+title = "FexDXVK Non-Adreno — optimized combined package"
 
 [[outputs]]
 id = "pSjuOnfFSCxh_hwfR1WrO"
 uri = "file://attached_assets/FexDXVK-DXVK-3.0.2.winlator"
 type = "unspecified"
-title = "FexDXVK DXVK 3.0.2 — standalone"
+title = "DXVK 3.0.2 — optimized standalone package"
 
 [[outputs]]
 id = "0sqSRiD43m1BA1X-FUHIa"
 uri = "file://attached_assets/FexDXVK-VKD3D-Proton-3.0.1.winlator"
 type = "unspecified"
-title = "FexDXVK VKD3D-Proton 3.0.1 — standalone"
+title = "VKD3D-Proton 3.0.1 — standalone package"
 
 [[outputs]]
 id = "EcT6zEc7Gp-xCf5UjF6CQ"
 uri = "file://attached_assets/FexDXVK-Wrapper-Improved-arm64.winlator"
 type = "unspecified"
-title = "FexDXVK Improved Wrapper — arm64"
+title = "Improved ARM64 wrapper — low-overhead defaults"
 
 [[outputs]]
 id = "z6RwRNn1EwraUAsqcecIM"
 uri = "file://attached_assets/FexDXVK-FEX-2607-source.winlator"
 type = "unspecified"
-title = "FexDXVK FEX-2607 source/config — build required"
+title = "FEX-2607 source/config package"
 
 [[outputs]]
 id = "02PJl_WchbYn1rYXQL6fi"
 uri = "file://attached_assets/FexDXVK-separate-packages.sha256"
 type = "unspecified"
-title = "Separate package checksums"
+title = "Optimized package checksums"
