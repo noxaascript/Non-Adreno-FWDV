@@ -2,9 +2,11 @@
 
 Game-specific Winlator GameHub package for **F1 2014**.
 
-F1 2014 is normally a 32-bit Direct3D 9 game, so the primary runtime is the
-DXVK `x32` directory. The package also carries the x64 DXVK files and VKD3D
-files for wrapper layouts that expect both architectures.
+F1 2014 uses DirectX 10 and DirectX 11 rendering paths. DXVK's `d3d10core.dll`,
+`d3d11.dll`, and `dxgi.dll` are the primary translation files. The package
+carries both x32 and x64 DXVK files so the selected Wine prefix can use the
+correct architecture. The VKD3D files are included for complete wrapper
+layouts, although F1 2014 does not require D3D12.
 
 ## Goals
 
@@ -27,8 +29,8 @@ config/
   f1-2014-vkd3d.conf      VKD3D-Proton compatibility profile
   f1-2014-wrapper.json    Wrapper profile and feature flags
 prebuilt/
-  dxvk/x32/               32-bit DXVK DLLs used by F1 2014
-  dxvk/x64/               64-bit DXVK DLLs
+  dxvk/x32/               32-bit DXVK 10/11 DLLs
+  dxvk/x64/               64-bit DXVK 10/11 DLLs
   vkd3d/x32/              32-bit VKD3D-Proton DLLs
   vkd3d/x64/              64-bit VKD3D-Proton DLLs
   wrapper/                Android arm64 wrapper library
@@ -73,7 +75,7 @@ host FEX binaries into this Android package.
 `init-f1-2014.sh` sets:
 
 - F1-specific DXVK, FEX, and VKD3D configuration paths.
-- 32-bit DXVK/Vulkan DLL overrides.
+- DXVK/Vulkan DLL overrides for DirectX 10/11.
 - The ARM64 wrapper and Vulkan implicit layer.
 - Low-overhead defaults: no worker pool, HUD, or custom present sleep.
 
@@ -89,8 +91,9 @@ Do not leave the monitor enabled for normal play; it adds polling overhead.
 
 ### F1 2014 does not start
 
-- Confirm the game is using a 32-bit Wine prefix.
-- Confirm `prebuilt/dxvk/x32/d3d9.dll` and `dxgi.dll` exist.
+- Confirm the Wine prefix architecture matches the installed game.
+- Confirm the matching `prebuilt/dxvk/x32/` or `x64/` directory contains
+  `d3d10core.dll`, `d3d11.dll`, and `dxgi.dll`.
 - Try disabling the implicit layer by removing `VK_INSTANCE_LAYERS` from the
   launcher to isolate a Vulkan-layer issue.
 - Start with balanced graphics settings and then increase quality.

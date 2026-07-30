@@ -7,7 +7,9 @@ export LD_PRELOAD="$PROFILE_DIR/prebuilt/wrapper/libfexdxvk_wrapper.so${LD_PRELO
 export VK_IMPLICIT_LAYER_PATH="$PROFILE_DIR/layer"
 export VK_INSTANCE_LAYERS="${VK_INSTANCE_LAYERS:-VK_LAYER_fexdxvk}"
 
-# F1 2014 is a 32-bit D3D9 title; keep native DXVK DLL preference.
+# F1 2014 uses DirectX 10/11; keep native DXVK DLL preference for both
+# architectures. The D3D9 and D3D12 overrides remain available for
+# compatibility with alternate Wine/GameHub layouts.
 export WINEDLLOVERRIDES="d3d8=n,b;d3d9=n,b;d3d10core=n,b;d3d11=n,b;d3d12=n,b;dxgi=n,b"
 export DXVK_CONFIG_FILE="$PROFILE_DIR/config/f1-2014-dxvk.conf"
 export VKD3D_CONFIG_FILE="$PROFILE_DIR/config/f1-2014-vkd3d.conf"

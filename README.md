@@ -13,7 +13,9 @@ The recommended game profile is:
 FexDXVK-F1-2014-Cool.winlator
 ```
 
-It is tuned for the 32-bit Direct3D 9 version of F1 2014.
+It is tuned for F1 2014's DirectX 10 and DirectX 11 rendering paths. The
+package includes both 32-bit and 64-bit DXVK files so the selected Wine
+prefix can use the correct architecture.
 
 > This project is not for Qualcomm Adreno GPUs. Use a Turnip-based wrapper
 > on Adreno devices.
@@ -48,7 +50,8 @@ FexDXVK-NonAdreno.winlator
 6. Select **Wrapper** and choose the imported wrapper.
 7. Launch the game.
 
-For F1 2014, use a **32-bit Wine prefix** and start with a 60 FPS cap.
+Use the Wine prefix architecture required by your F1 2014 installation and
+start with a 60 FPS cap.
 
 ### 3. First launch
 
@@ -184,8 +187,9 @@ prebuilt/vulkan_layer/libVkLayer_fexdxvk.so
 **The wrapper does not appear:** confirm the file ends in `.winlator` and use
 **Wrappers → Import**.
 
-**F1 2014 does not start:** use a 32-bit Wine prefix and confirm
-`prebuilt/dxvk/x32/d3d9.dll` and `dxgi.dll` are present.
+**F1 2014 does not start:** confirm the selected Wine prefix architecture and
+that the matching DXVK directory contains `d3d10core.dll`, `d3d11.dll`, and
+`dxgi.dll`.
 
 **The game is too hot:** cap at 60 FPS, lower resolution, use the cool profile,
 and lower the thermal threshold.
