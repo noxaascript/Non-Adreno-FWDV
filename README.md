@@ -1,108 +1,73 @@
 # FexDXVK Non-Adreno
 
-Winlator GameHub wrapper packages for Android devices with **Mali** or
-**PowerVR** GPUs. The project provides separate DXVK, VKD3D-Proton, FEX
-configuration, and custom ARM64 wrapper components.
+## Intro
 
-> Not intended for Qualcomm Adreno GPUs. Use a Turnip-based wrapper on Adreno.
+FexDXVK is a Winlator GameHub wrapper project for Android devices using
+**Mali** or **PowerVR** graphics. It combines DXVK, VKD3D-Proton, FEX
+configuration, and a custom ARM64 wrapper/layer focused on stable graphics,
+lower heat, and reduced frame-time spikes.
 
-## Latest release
-
-The current release is **v1.1.0**:
-
-<https://github.com/noxaascript/Non-Adreno-FWDV/releases/tag/v1.1.0>
-
-### Recommended package for F1 2014
-
-**FexDXVK-F1-2014-Cool.winlator**
-
-This is a game-specific profile for the 32-bit Direct3D 9 version of F1 2014.
-It keeps high visual quality while reducing avoidable heat and frame-time
-spikes:
-
-- DXVK 3.0.2 x32 runtime for D3D9.
-- Stable 60 FPS-oriented presentation.
-- Persistent shader/state cache.
-- Two DXVK compiler threads instead of an unrestricted compiler storm.
-- No idle worker-pool polling.
-- No duplicate custom frame-pacing sleep by default.
-- Thermal threshold of 70°C.
-- Diagnostics and HUD polling disabled during normal play.
-
-## Downloadable packages
-
-| Package | Approx. size | Use |
-|---|---:|---|
-| `FexDXVK-F1-2014-Cool.winlator` | 23 MB | Recommended F1 2014 profile |
-| `FexDXVK-DXVK-3.0.2.winlator` | 18 MB | Standalone DXVK |
-| `FexDXVK-VKD3D-Proton-3.0.1.winlator` | 5 MB | Standalone D3D12 runtime |
-| `FexDXVK-Wrapper-Improved-arm64.winlator` | 125 KB | Custom wrapper and Vulkan layer |
-| `FexDXVK-FEX-2607-source.winlator` | 30 KB | FEX configuration and source |
-| `FexDXVK-NonAdreno.winlator` | 23 MB | Combined general-purpose package |
-
-Checksums are included in the release. Always verify a download before
-copying it to Android.
-
-## Import into Winlator GameHub
-
-1. Download a `.winlator` file from the release.
-2. Copy it to the Android device.
-3. Open **Winlator GameHub**.
-4. Open **Wrappers → Import**.
-5. Select the package.
-6. Open the F1 2014 container.
-7. Choose **Edit Container → Wrapper**.
-8. Select the imported FexDXVK wrapper.
-9. Launch the game.
-
-For F1 2014, use a **32-bit Wine prefix** and start with the balanced-cool
-profile. If GameHub requires one combined archive, use
-`FexDXVK-F1-2014-Cool.winlator`.
-
-## F1 2014 package layout
+The recommended game profile is:
 
 ```text
 FexDXVK-F1-2014-Cool.winlator
-├── config/
-│   ├── f1-2014-dxvk.conf
-│   ├── f1-2014-fex.conf
-│   ├── f1-2014-vkd3d.conf
-│   └── f1-2014-wrapper.json
-├── init-f1-2014.sh
-├── layer/VkLayer_fexdxvk.json
-└── prebuilt/
-    ├── dxvk/x32/       F1 2014's 32-bit DXVK DLLs
-    ├── dxvk/x64/       64-bit DXVK DLLs
-    ├── vkd3d/x32/      32-bit D3D12 DLLs
-    ├── vkd3d/x64/      64-bit D3D12 DLLs
-    ├── wrapper/        Android ARM64 wrapper .so
-    ├── vulkan_layer/   Android ARM64 Vulkan layer .so
-    └── fex/            FEX runtime slot
 ```
 
-F1 2014 normally uses `prebuilt/dxvk/x32/d3d9.dll` and `dxgi.dll`.
-The VKD3D files are included because some GameHub wrapper importers expect
-both graphics API layouts.
+It is tuned for the 32-bit Direct3D 9 version of F1 2014.
 
-## FEX runtime requirement
+> This project is not for Qualcomm Adreno GPUs. Use a Turnip-based wrapper
+> on Adreno devices.
 
-The repository includes FEX configuration, but does not include fake or
-incompatible FEX binaries. FEX-Emu does not publish a compatible prebuilt
-FEX-2607 Android/ARM64 runtime package.
+## Steps
 
-Build FEX on an ARM64 Android/Linux environment and add:
+### 1. Download
+
+Open the latest release:
+
+<https://github.com/noxaascript/Non-Adreno-FWDV/releases>
+
+For F1 2014, download:
 
 ```text
-prebuilt/fex/FEXInterpreter
-prebuilt/fex/FEXBash
-prebuilt/fex/lib/libFEX.so
-prebuilt/fex/lib/libFEXCore.so
-prebuilt/fex/thunks/*.so
+FexDXVK-F1-2014-Cool.winlator
 ```
 
-Do not copy x86 workstation FEX binaries into an Android package.
+For general use, download:
 
-## Build FEX-Emu on ARM64
+```text
+FexDXVK-NonAdreno.winlator
+```
+
+### 2. Import
+
+1. Copy the `.winlator` file to Android.
+2. Open **Winlator GameHub**.
+3. Open **Wrappers → Import**.
+4. Select the package.
+5. Edit the game container.
+6. Select **Wrapper** and choose the imported wrapper.
+7. Launch the game.
+
+For F1 2014, use a **32-bit Wine prefix** and start with a 60 FPS cap.
+
+### 3. First launch
+
+The first launch may stutter while shaders compile. Drive one complete lap,
+exit normally, and launch again so the persistent shader cache can be reused.
+
+### 4. Tune temperature
+
+Start with the included cool profile. If the phone is still too hot:
+
+- Keep the game capped at 60 FPS.
+- Lower resolution before lowering texture quality.
+- Change the F1 profile thermal threshold from `70` to `68`.
+- Keep diagnostics disabled during normal play.
+
+### 5. Build FEX when required
+
+The package includes FEX configuration, but not fake host binaries. Build
+FEX-2607 on an ARM64 Android/Linux environment:
 
 ```bash
 git clone --depth 1 --branch FEX-2607 \
@@ -115,14 +80,19 @@ cmake -S FEX -B FEX/build \
 
 cmake --build FEX/build --parallel
 cmake --install FEX/build
-
-cp fex-install/bin/FEX prebuilt/fex/FEXInterpreter
-cp fex-install/bin/FEXBash prebuilt/fex/FEXBash
-cp fex-install/lib/libFEX*.so prebuilt/fex/lib/
-cp fex-install/lib/fex-emu/thunks/*.so prebuilt/fex/thunks/
 ```
 
-Verify architecture:
+Copy the ARM64 results into:
+
+```text
+prebuilt/fex/FEXInterpreter
+prebuilt/fex/FEXBash
+prebuilt/fex/lib/libFEX.so
+prebuilt/fex/lib/libFEXCore.so
+prebuilt/fex/thunks/*.so
+```
+
+Verify them:
 
 ```bash
 file prebuilt/fex/FEXInterpreter
@@ -130,12 +100,65 @@ file prebuilt/fex/FEXBash
 file prebuilt/fex/lib/*.so
 ```
 
-Every FEX executable and library must be ARM64/aarch64.
+Every file must be ARM64/aarch64.
 
-## Build the custom ARM64 wrapper
+## Information
 
-The repository already includes rebuilt ARM64 libraries. Rebuild them after
-changing `src/`:
+### Components
+
+| Component | Contents |
+|---|---|
+| FEX | FEXCore, FEXInterpreter, FEXBash, RootFS/thunks, and ARM64 libraries |
+| Wrapper | Launcher script, environment variables, JSON profiles, ARM64 helper libraries |
+| DXVK | `x32/` and `x64/` Direct3D-to-Vulkan DLLs |
+| VKD3D-Proton | `x32/` and `x64/` D3D12 translation DLLs |
+| Vulkan layer | Pipeline cache, command-buffer reuse, queue handling, and optional pacing |
+
+Typical compressed sizes:
+
+```text
+FEX:             20–80 MB
+Wrapper:         50 KB–5 MB
+DXVK:            8–25 MB
+VKD3D-Proton:    3–12 MB
+```
+
+The current package is smaller when FEX runtime binaries are not yet added.
+
+### Current packages
+
+| Package | Purpose |
+|---|---|
+| `FexDXVK-F1-2014-Cool.winlator` | F1 2014 cool high-quality profile |
+| `FexDXVK-DXVK-3.0.2.winlator` | Standalone DXVK |
+| `FexDXVK-VKD3D-Proton-3.0.1.winlator` | Standalone VKD3D-Proton |
+| `FexDXVK-Wrapper-Improved-arm64.winlator` | Custom wrapper and Vulkan layer |
+| `FexDXVK-FEX-2607-source.winlator` | FEX configuration and build source |
+| `FexDXVK-NonAdreno.winlator` | Combined package |
+
+### Low-overhead defaults
+
+The wrapper is configured to avoid unnecessary frame-time work:
+
+- Worker polling is disabled by default.
+- HUD and statistics polling are disabled by default.
+- Custom frame-pacing sleeps are disabled by default.
+- DXVK shader compilation is bounded.
+- State and pipeline caches are persistent.
+- Thermal scaling remains active to reduce sustained throttling.
+
+Enable diagnostics only while testing:
+
+```bash
+FEXDXVK_MONITOR=1 ./init-f1-2014.sh <wine-or-fex-command>
+```
+
+A guaranteed percentage improvement requires testing the same game, device,
+driver, resolution, and graphics settings before and after the change.
+
+### Android wrapper build
+
+The custom libraries can be rebuilt with Android NDK r25c or newer:
 
 ```bash
 export NDK="$HOME/Android/Sdk/ndk/25.2.9519653"
@@ -144,8 +167,7 @@ cmake -S src -B build/android \
   -DCMAKE_TOOLCHAIN_FILE="$NDK/build/cmake/android.toolchain.cmake" \
   -DANDROID_ABI=arm64-v8a \
   -DANDROID_PLATFORM=android-28 \
-  -DCMAKE_BUILD_TYPE=Release \
-  -DANDROID_STL=c++_shared
+  -DCMAKE_BUILD_TYPE=Release
 
 cmake --build build/android --parallel
 ```
@@ -157,113 +179,41 @@ prebuilt/wrapper/libfexdxvk_wrapper.so
 prebuilt/vulkan_layer/libVkLayer_fexdxvk.so
 ```
 
-Confirm with:
+### Troubleshooting
 
-```bash
-file prebuilt/wrapper/libfexdxvk_wrapper.so
-file prebuilt/vulkan_layer/libVkLayer_fexdxvk.so
-```
+**The wrapper does not appear:** confirm the file ends in `.winlator` and use
+**Wrappers → Import**.
 
-## F1 2014 thermal and performance tuning
+**F1 2014 does not start:** use a 32-bit Wine prefix and confirm
+`prebuilt/dxvk/x32/d3d9.dll` and `dxgi.dll` are present.
 
-The F1 profile is intentionally cooler than an uncapped performance profile.
+**The game is too hot:** cap at 60 FPS, lower resolution, use the cool profile,
+and lower the thermal threshold.
 
-Recommended starting point:
+**The game stutters on the first lap:** allow shader compilation to finish,
+exit normally, then launch again.
 
-- 60 FPS cap.
-- Native 1280x720 or 1920x1080 resolution.
-- Keep texture quality high.
-- Lower resolution before lowering texture quality if the device overheats.
-- Let the first complete lap compile shaders, then restart the game once.
-- Use the balanced-cool profile for sustained sessions.
+**FEX reports an architecture error:** rebuild FEX on ARM64 and verify every
+binary with `file`. Do not use x86 host binaries.
 
-The profile sets a 70°C thermal threshold. To make it cooler, edit
-`config/f1-2014-wrapper.json`:
+## Credits
 
-```json
-"thermalThresholdCelsius": 68
-```
+- **DXVK** — <https://github.com/doitsujin/dxvk>
+- **VKD3D-Proton** — <https://github.com/HansKristian-Work/vkd3d-proton>
+- **FEX-Emu** — <https://github.com/FEX-Emu/FEX>
+- **Vulkan-Headers** — <https://github.com/KhronosGroup/Vulkan-Headers>
+- **Winlator GameHub** — the target wrapper/import environment
 
-To temporarily collect diagnostics:
+DXVK, VKD3D-Proton, FEX-Emu, and Vulkan-Headers retain their own upstream
+licenses. Review the upstream licenses before redistribution.
 
-```bash
-FEXDXVK_MONITOR=1 ./init-f1-2014.sh <wine-or-fex-command>
-```
+## Outro
 
-Do not leave monitoring enabled during normal play because HUD and file
-polling add overhead.
+Start with the F1 2014 cool package, a 60 FPS cap, and the balanced settings.
+Let the first lap compile shaders before judging performance. If the device
+still overheats, lower resolution or use a cooler thermal threshold rather
+than immediately disabling visual quality.
 
-## Low-overhead defaults
+Project releases:
 
-The custom wrapper defaults are designed to avoid wrapper-induced stutter:
-
-- Worker threads are disabled unless `FEXDXVK_WORKERS=1`.
-- DXVK HUD/stat polling is disabled unless `FEXDXVK_MONITOR=1`.
-- Custom frame-pacing sleeps are disabled unless
-  `FEXDXVK_FRAME_PACING=1`.
-- DXVK uses a persistent state cache.
-- Compiler threads are bounded.
-- Thermal scaling remains active to avoid prolonged throttling.
-
-These settings target avoidable frame-time spikes. A guaranteed percentage
-improvement requires testing the same game, driver, resolution, and device
-before and after the change.
-
-## Repackage locally
-
-From the repository root:
-
-```bash
-zip -qr FexDXVK-F1-2014-Cool.winlator \
-  profiles/f1-2014/config \
-  profiles/f1-2014/init-f1-2014.sh \
-  profiles/f1-2014/README.md \
-  layer/ prebuilt/
-
-zip -qr FexDXVK-NonAdreno.winlator \
-  config/ layer/ prebuilt/ src/ init.sh README.md \
-  -x '*/.gitkeep'
-
-unzip -t FexDXVK-F1-2014-Cool.winlator
-sha256sum FexDXVK-F1-2014-Cool.winlator
-```
-
-## Troubleshooting
-
-### F1 2014 does not start
-
-- Use a 32-bit Wine prefix.
-- Confirm `prebuilt/dxvk/x32/d3d9.dll` and `dxgi.dll` exist.
-- Confirm the FEX runtime is ARM64, not x86.
-- Try removing `VK_INSTANCE_LAYERS` from the launcher to isolate the custom
-  Vulkan layer.
-- Start at 1280x720 and increase resolution after confirming stability.
-
-### The game is too hot
-
-- Enable a 60 FPS cap.
-- Use the `cool` profile or lower the thermal threshold to 68°C.
-- Disable custom frame pacing unless the compositor visibly judders.
-- Keep diagnostics disabled.
-
-### Stutter on the first lap
-
-This is usually shader compilation. Complete one lap, exit normally, and
-launch again so the persistent DXVK state cache can be reused.
-
-### Wrapper does not appear
-
-- Confirm the file extension is `.winlator`.
-- Import through **Wrappers → Import**.
-- Verify the archive with `unzip -t`.
-- Re-download and compare the SHA-256 checksum.
-
-## Upstream projects
-
-- DXVK: <https://github.com/doitsujin/dxvk>
-- VKD3D-Proton: <https://github.com/HansKristian-Work/vkd3d-proton>
-- FEX-Emu: <https://github.com/FEX-Emu/FEX>
-- Vulkan-Headers: <https://github.com/KhronosGroup/Vulkan-Headers>
-
-Each upstream component retains its own license. Review those licenses before
-redistributing modified packages.
+<https://github.com/noxaascript/Non-Adreno-FWDV/releases>
