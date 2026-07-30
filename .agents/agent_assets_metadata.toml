@@ -6,3 +6,33 @@ id = "Uj3aFe9h6PqEONHqcTuPO"
 uri = "file://attached_assets/FexDXVK-NonAdreno.winlator"
 type = "unspecified"
 title = "FexDXVK-NonAdreno.winlator — updated 23 MB package"
+
+[[outputs]]
+id = "pSjuOnfFSCxh_hwfR1WrO"
+uri = "file://attached_assets/FexDXVK-DXVK-3.0.2.winlator"
+type = "unspecified"
+title = "FexDXVK DXVK 3.0.2 — standalone"
+
+[[outputs]]
+id = "0sqSRiD43m1BA1X-FUHIa"
+uri = "file://attached_assets/FexDXVK-VKD3D-Proton-3.0.1.winlator"
+type = "unspecified"
+title = "FexDXVK VKD3D-Proton 3.0.1 — standalone"
+
+[[outputs]]
+id = "EcT6zEc7Gp-xCf5UjF6CQ"
+uri = "file://attached_assets/FexDXVK-Wrapper-Improved-arm64.winlator"
+type = "unspecified"
+title = "FexDXVK Improved Wrapper — arm64"
+
+[[outputs]]
+id = "z6RwRNn1EwraUAsqcecIM"
+uri = "file://attached_assets/FexDXVK-FEX-2607-source.winlator"
+type = "unspecified"
+title = "FexDXVK FEX-2607 source/config — build required"
+
+[[outputs]]
+id = "02PJl_WchbYn1rYXQL6fi"
+uri = "file://attached_assets/FexDXVK-separate-packages.sha256"
+type = "unspecified"
+title = "Separate package checksums"
