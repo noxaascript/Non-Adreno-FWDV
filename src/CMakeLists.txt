@@ -71,8 +71,8 @@ target_compile_options(fexdxvk_wrapper PRIVATE
 
 target_compile_definitions(fexdxvk_wrapper PRIVATE
     FEXDXVK_VERSION="1.0.0"
-    FEXDXVK_FEXCORE="2607-custom"
-    FEXDXVK_DXVK="1.7.5-nonadreno-fix"
+    FEXDXVK_FEXCORE="2607"
+    FEXDXVK_DXVK="3.0.2"
 )
 
 if (ANDROID)

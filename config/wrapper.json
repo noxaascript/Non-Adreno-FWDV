@@ -1,9 +1,9 @@
 {
   "name": "Wrapper-NonAdreno",
   "version": "1.0.0",
-  "fexCore": "2607-custom",
-  "dxvk": "1.7.5-nonadreno-fix",
-  "vkd3dProton": "2.13",
+  "fexCore": "2607-arm64-build-required",
+  "dxvk": "3.0.2",
+  "vkd3dProton": "3.0.1",
   "description": "Optimized FEX+DXVK+VKD3D wrapper for non-Adreno GPUs (Mali / PowerVR) on Winlator GameHub",
   "targetGPUs": ["Mali-G57","Mali-G68","Mali-G610","Mali-G615","Mali-G720","PowerVR Series"],
   "profile": "balanced",

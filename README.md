@@ -1,5 +1,5 @@
 # FexDXVK NonAdreno Wrapper
-**Wrapper-NonAdreno | FexCore-2607-custom | DXVK 1.7.5-nonadreno-fix**
+**Wrapper-NonAdreno | FexCore-2607-custom | DXVK 3.0.2 official release**
 
 Custom FEX+DXVK+VKD3D-Proton wrapper for Winlator GameHub.
 Optimized for **Mali** and **PowerVR** GPUs (not for Adreno / Qualcomm).
@@ -10,11 +10,11 @@ Optimized for **Mali** and **PowerVR** GPUs (not for Adreno / Qualcomm).
 
 | File | Type | Source |
 |------|------|--------|
-| `prebuilt/dxvk/{x32,x64}/*.dll` | Windows PE DLL (x86/x64) | DXVK 1.7.5-nonadreno-fix build |
-| `prebuilt/vkd3d/{x32,x64}/d3d12.dll` | Windows PE DLL (x86/x64) | VKD3D-Proton 2.13 build |
-| `prebuilt/fex/FEXInterpreter` | ARM64 ELF executable | FEX-Emu 2607-custom build |
-| `prebuilt/fex/FEXBash` | ARM64 ELF executable | FEX-Emu 2607-custom build |
-| `prebuilt/fex/lib/libFEX.so` | ARM64 ELF .so | FEX-Emu 2607-custom build |
+| `prebuilt/dxvk/{x32,x64}/*.dll` | Windows PE DLL (x86/x64) | DXVK 3.0.2 official release build |
+| `prebuilt/vkd3d/{x32,x64}/d3d12.dll` | Windows PE DLL (x86/x64) | VKD3D-Proton 3.0.1 build |
+| `prebuilt/fex/FEXInterpreter` | ARM64 ELF executable | FEX-Emu 2607 (ARM64 build required) build |
+| `prebuilt/fex/FEXBash` | ARM64 ELF executable | FEX-Emu 2607 (ARM64 build required) build |
+| `prebuilt/fex/lib/libFEX.so` | ARM64 ELF .so | FEX-Emu 2607 (ARM64 build required) build |
 | `prebuilt/wrapper/libfexdxvk_wrapper.so` | ARM64 ELF .so | **Build from src/ (see below)** |
 | `prebuilt/vulkan_layer/libVkLayer_fexdxvk.so` | ARM64 ELF .so | **Build from src/ (see below)** |
 | `layer/VkLayer_fexdxvk.json` | Vulkan layer manifest (JSON) | Included |
@@ -57,7 +57,7 @@ cmake --build build/linux --parallel
 
 ## Get the Upstream Binaries
 
-### DXVK 1.7.5-nonadreno-fix
+### DXVK 3.0.2 official release
 
 ```bash
 # Build from source (requires MinGW cross-compiler):
@@ -67,7 +67,7 @@ cp /tmp/dxvk-pkg/x32/*.dll prebuilt/dxvk/x32/
 cp /tmp/dxvk-pkg/x64/*.dll prebuilt/dxvk/x64/
 ```
 
-### VKD3D-Proton 2.13
+### VKD3D-Proton 3.0.1
 
 ```bash
 git clone https://github.com/HansKristian-Work/vkd3d-proton.git
@@ -76,7 +76,7 @@ cp /tmp/vkd3d-pkg/x86/d3d12.dll prebuilt/vkd3d/x32/
 cp /tmp/vkd3d-pkg/x64/d3d12.dll prebuilt/vkd3d/x64/
 ```
 
-### FEX-Emu 2607-custom
+### FEX-Emu 2607 (ARM64 build required)
 
 ```bash
 git clone https://github.com/FEX-Emu/FEX.git -b FEX-2607
@@ -162,3 +162,14 @@ Mali-G57 · Mali-G68 · Mali-G610 · Mali-G615 · Mali-G720 · PowerVR Series
 | `cool` | Cool | 65°C | Lower temps |
 
 Edit `config/wrapper.json` → `"profile"` to switch.
+
+## Release binary status
+
+The release package includes the complete official DXVK 3.0.2 x32/x64 DLL sets,
+the complete VKD3D-Proton 3.0.1 x86/x64 D3D12 DLL sets, and the two custom
+Android arm64-v8a libraries built with NDK r25c.
+
+FEX-Emu does not publish a prebuilt FEX-2607 Android/ARM64 runtime asset. The
+`FEXInterpreter`, `FEXBash`, `libFEX.so`, and thunk libraries must be built on an
+ARM64 Linux/Android build environment and copied into `prebuilt/fex/`. They are
+not replaced with incompatible host binaries.
