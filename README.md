@@ -50,15 +50,35 @@ FexDXVK-NonAdreno.winlator
 6. Select **Wrapper** and choose the imported wrapper.
 7. Launch the game.
 
+### 3. Run a Windows program directly
+
+The package includes a simple emulator launcher:
+
+```bash
+./emulator.sh /path/to/game.exe
+```
+
+It checks that the ARM64 FEX runtime and wrapper files exist, loads the
+DXVK environment, and starts the executable through FEX. The optional custom
+Vulkan layer is disabled by default for maximum compatibility; enable it only
+for testing with:
+
+```bash
+FEXDXVK_ENABLE_LAYER=1 ./emulator.sh /path/to/game.exe
+```
+
+It fails clearly when the FEX runtime has not been installed; configuration
+files alone are not an emulator.
+
 Use the Wine prefix architecture required by your F1 2014 installation and
 start with a 60 FPS cap.
 
-### 3. First launch
+### 4. First launch
 
 The first launch may stutter while shaders compile. Drive one complete lap,
 exit normally, and launch again so the persistent shader cache can be reused.
 
-### 4. Tune temperature
+### 5. Tune temperature
 
 Start with the included cool profile. If the phone is still too hot:
 
@@ -67,7 +87,7 @@ Start with the included cool profile. If the phone is still too hot:
 - Change the F1 profile thermal threshold from `70` to `68`.
 - Keep diagnostics disabled during normal play.
 
-### 5. Build FEX when required
+### 6. Build FEX when required
 
 The package includes FEX configuration, but not fake host binaries. Build
 FEX-2607 on an ARM64 Android/Linux environment:

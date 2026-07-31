@@ -95,10 +95,10 @@ extern FexLayerConfig g_fexConfig;
 void fexlayer_load_config(const char *wrapperJsonPath);
 
 /* ---- Exported Vulkan entry points ---- */
-VKAPI_ATTR PFN_vkVoidFunction VKAPI_CALL
+__attribute__((visibility("default"))) VKAPI_ATTR PFN_vkVoidFunction VKAPI_CALL
 fexdxvk_GetInstanceProcAddr(VkInstance instance, const char *pName);
 
-VKAPI_ATTR PFN_vkVoidFunction VKAPI_CALL
+__attribute__((visibility("default"))) VKAPI_ATTR PFN_vkVoidFunction VKAPI_CALL
 fexdxvk_GetDeviceProcAddr(VkDevice device, const char *pName);
 
 /* ---- Pipeline cache helpers ---- */

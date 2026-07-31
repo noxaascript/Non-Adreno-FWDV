@@ -111,6 +111,9 @@ target_compile_options(VkLayer_fexdxvk PRIVATE
     -fPIC
 )
 
+# Vulkan loader entry points must remain visible even though the rest of the
+# layer uses hidden visibility.
+
 if (ANDROID)
     # pthreads are part of libc on Android — no separate -lpthread
     target_link_libraries(VkLayer_fexdxvk PRIVATE log)

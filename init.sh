@@ -5,11 +5,13 @@
 WRAPPER_DIR="$(dirname "$(readlink -f "$0")")"
 
 # Wrapper .so (LD_PRELOAD)
-export LD_PRELOAD="$WRAPPER_DIR/prebuilt/wrapper/libfexdxvk_wrapper.so:$LD_PRELOAD"
+export LD_PRELOAD="$WRAPPER_DIR/prebuilt/wrapper/libfexdxvk_wrapper.so${LD_PRELOAD:+:$LD_PRELOAD}"
 
 # Vulkan implicit layer
 export VK_IMPLICIT_LAYER_PATH="$WRAPPER_DIR/layer"
-export VK_INSTANCE_LAYERS="VK_LAYER_fexdxvk"
+if [ "${FEXDXVK_ENABLE_LAYER:-0}" = "1" ]; then
+    export VK_INSTANCE_LAYERS="${VK_INSTANCE_LAYERS:-VK_LAYER_fexdxvk}"
+fi
 
 # DXVK + VKD3D DLL overrides
 export WINEDLLOVERRIDES="d3d9=n,b;d3d10core=n,b;d3d11=n,b;d3d12=n,b;dxgi=n,b"
@@ -21,7 +23,13 @@ export FEXDXVK_CONFIG="$WRAPPER_DIR/config/wrapper.json"
 
 # FEX thunks
 export FEX_THUNKLIBS="$WRAPPER_DIR/prebuilt/fex/thunks"
-export FEX_ROOTFS=""
+export FEX_ROOTFS="${FEX_ROOTFS:-$WRAPPER_DIR/prebuilt/fex/rootfs}"
+export FEX_CONFIG="${FEX_CONFIG:-$WRAPPER_DIR/config/fex.conf}"
+export FEX_CONFIG_FILE="${FEX_CONFIG_FILE:-$WRAPPER_DIR/config/fex.conf}"
+
+# Simple emulator command. Usage:
+#   ./emulator.sh /path/to/game.exe [args...]
+export FEXDXVK_ROOT="$WRAPPER_DIR"
 
 # Runtime stats socket
 export FEXDXVK_STATS_PATH="/tmp/fexdxvk_stats"
